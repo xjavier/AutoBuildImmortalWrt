@@ -77,6 +77,8 @@ PACKAGES="$PACKAGES kmod-video-videobuf2"
 PACKAGES="$PACKAGES udpxy"
 PACKAGES="$PACKAGES luci-app-udpxy"
 PACKAGES="$PACKAGES luci-i18n-udpxy-zh-cn"
+PACKAGES="$PACKAGES iptables-nft"
+PACKAGES="$PACKAGES ip6tables-nft"
 # 增加几个必备组件 方便用户安装iStore
 PACKAGES="$PACKAGES fdisk"
 PACKAGES="$PACKAGES script-utils"

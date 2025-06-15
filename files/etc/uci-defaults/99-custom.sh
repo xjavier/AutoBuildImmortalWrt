@@ -40,9 +40,9 @@ if [ "$count" -eq 1 ]; then
    # 单网口设备 不支持修改ip 不要在此处修改ip 
    uci set network.lan.proto='dhcp'
 elif [ "$count" -gt 1 ]; then
-   # 提取第一个接口作为WAN
+   # 提取第6个接口作为WAN
    wan_ifname=$(echo "$ifnames" | awk '{print $6}')
-   # 剩余接口保留给LAN
+   # 剩余1-5接口保留给LAN
    lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f1-5)
    # 设置WAN接口基础配置
    uci set network.wan=interface

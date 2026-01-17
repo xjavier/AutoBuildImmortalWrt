@@ -63,6 +63,13 @@ PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
 PACKAGES="$PACKAGES luci-app-openclash"
 PACKAGES="$PACKAGES luci-i18n-homeproxy-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-dockerman-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-ddns-go-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-wol-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-netdata-zh-cn"
+PACKAGES="$PACKAGES luci-ssl-openssl"
+PACKAGES="$PACKAGES luci-i18n-autoreboot-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-udpxy-zh-cn"
 # 判断是否需要编译 Docker 插件
 if [ "$INCLUDE_DOCKER" = "yes" ]; then
     PACKAGES="$PACKAGES luci-i18n-dockerman-zh-cn"

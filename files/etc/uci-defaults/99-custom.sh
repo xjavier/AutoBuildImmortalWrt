@@ -53,7 +53,7 @@ case "$board_name" in
     *)
         # 默认第一个接口为WAN，其余为LAN
         wan_ifname=$(echo "$ifnames" | awk '{print $6}')
-        lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f1-)
+        lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f1-3)
         echo "Using default mapping: WAN=$wan_ifname LAN=$lan_ifnames" >>"$LOGFILE"
         ;;
 esac
@@ -80,7 +80,7 @@ elif [ "$count" -gt 1 ]; then
     uci set network.wan6.proto='dhcpv6'
 
     # 查找 br-lan 设备 section
-    section=$(uci show network | awk -F '[.=]' '/\.@?device\[\d+\]\.name=.br-lan.$/ {print $2; exit}')
+    section=$(uci show network | awk -F '[.=]' '/\.@?device\[\d+\]\.name=.br-lan.$/ {print $1-3; exit}')
     if [ -z "$section" ]; then
         echo "error：cannot find device 'br-lan'." >>$LOGFILE
     else

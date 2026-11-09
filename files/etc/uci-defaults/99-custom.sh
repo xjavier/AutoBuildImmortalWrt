@@ -54,8 +54,7 @@ case "$board_name" in
         # 默认第一个接口为WAN，其余为LAN
         wan_ifname=$(echo "$ifnames" | awk '{print $6}')
         lan_ifnames=$(echo "$ifnames" | cut -d ' ' -f1-3)
-        br_iptv_ifnames=$(echo "$ifnames" | cut -d ' ' -f4-5)
-        echo "Using default mapping: WAN=$wan_ifname LAN=$lan_ifnames IPTV=$br_iptv_ifnames" >>"$LOGFILE"
+        echo "Using default mapping: WAN=$wan_ifname LAN=$lan_ifnames" >>"$LOGFILE"
         ;;
 esac
 
@@ -92,28 +91,6 @@ elif [ "$count" -gt 1 ]; then
             uci add_list "network.$section.ports"="$port"
         done
         echo "Updated br-lan ports: $lan_ifnames" >>$LOGFILE
-    fi
-    # 处理 br-iptv 网桥
-    iptv_section=$(uci show network | awk -F '[.=]' '/\.@?device\[\d+\]\.name=.br-iptv.$/ {print $4-5; exit}')
-    if [ -z "$iptv_section" ]; then
-        # 如果不存在，新建 device
-        iptv_section=$(uci add network device)
-        uci set "network.$iptv_section.name"="br_iptv"
-        uci set "network.$iptv_section.type"="bridge"
-    fi
-    # 清空旧端口，写入 4、5 口
-        uci -q delete "network.$iptv_section.ports"
-        for port in $br_iptv_ifnames; do
-            uci add_list "network.$iptv_section.ports"="$port"
-        done
-        echo "Updated br_iptv ports: $br_iptv_ifnames" >>"$LOGFILE"
-
-    # 如果还需要一个 network 接口绑定 br-iptv（可选）
-    if ! uci show network | grep -q "network.iptv"; then
-         uci add network interface
-         uci set network.@interface[-1].name="iptv"
-         uci set network.@interface[-1].device="br_iptv"
-         uci set network.@interface[-1].proto="none"
     fi
 
     # LAN口设置静态IP
